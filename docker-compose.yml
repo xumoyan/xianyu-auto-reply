@@ -9,7 +9,7 @@ services:
     # 使用root用户避免权限问题
     user: "0:0"
     ports:
-      - "${WEB_PORT:-8080}:8080"
+      - "${WEB_PORT:-30018}:30018"
     volumes:
       # 数据持久化
       - ./data:/app/data:rw
@@ -61,7 +61,7 @@ services:
     networks:
       - xianyu-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:30018/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -71,10 +71,8 @@ services:
       resources:
         limits:
           memory: ${MEMORY_LIMIT:-2048}M
-          cpus: '${CPU_LIMIT:-2.0}'
         reservations:
           memory: ${MEMORY_RESERVATION:-512}M
-          cpus: '${CPU_RESERVATION:-0.5}'
 
   # 可选：添加Nginx反向代理
   nginx:
